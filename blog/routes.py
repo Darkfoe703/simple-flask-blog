@@ -3,14 +3,14 @@ from flask import Blueprint, render_template, url_for
 
 blog = Blueprint('blog', __name__)
 
-POST_FOLDER = os.path.join(os.path.dirname(__file__), 'posts')
+POSTS_FOLDER = os.path.join(os.path.dirname(__file__), 'posts')
 
 def get_posts():
     """Lee los archivos Markdown y devuelve una lista de posts con sus metadatos."""
     posts = []
-    for filename in os.listdir(POST_FOLDER):
+    for filename in os.listdir(POSTS_FOLDER):
         if filename.endswith('.md') or filename.endswith('.markdown'):
-            filepath = os.path.join(POST_FOLDER, filename)
+            filepath = os.path.join(POSTS_FOLDER, filename)
             with open(filepath, 'r') as file:
                 post = frontmatter.load(file)# Procesar metadatos
                 posts.append({

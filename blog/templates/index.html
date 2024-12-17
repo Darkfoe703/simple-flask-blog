@@ -31,29 +31,29 @@
             <div class="page-content">
                 <div class="card">
                     <div class="card-header text-center">
-                        <h5 class="card-title">Voluptates Corporis Placeat</h5> 
-                        <small class="small text-muted">January 24 2019 
+                        <h5 class="card-title">{{ posts[0].title }}</h5> 
+                        <small class="small text-muted">{{ posts[0].date }} 
                             <span class="px-2">-</span>
                             <a href="#" class="text-muted">32 Comments</a>
                         </small>
                     </div>
                     <div class="card-body">
                         <div class="blog-media">
-                            <img src="{{ static_base }}/imgs/blog-6.jpg" alt="" class="w-100">
+                            <img src="{{ static_base }}/{{ posts[0].image }} " alt="" class="w-100">
                             <a href="#" class="badge badge-primary">#Salupt</a>     
                         </div>  
-                        <p class="my-3">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos saepe dolores et nostrum porro odit reprehenderit animi, est ratione fugit aspernatur ipsum. Nostrum placeat hic saepe voluptatum dicta ipsum beatae.</p>
+                        <p class="my-3">{{ posts[0].excerpt }} </p>
                     </div>
                     
                     <div class="card-footer d-flex justify-content-between align-items-center flex-basis-0">
                         <button class="btn btn-primary circle-35 mr-4"><i class="ti-back-right"></i></button>
-                        <a href="single-post.html" class="btn btn-outline-dark btn-sm">READ MORE</a>
-                        <a href="#" class="text-dark small text-muted">By : Joe Mitchell</a>
+                        <a href=" {{ url_for('blog.post_detail', slug=posts[0].slug) }}" class="btn btn-outline-dark btn-sm">READ MORE</a>
+                        <a href="#" class="text-dark small text-muted">By : {{ blog_author }} </a>
                     </div>                  
                 </div>
                 <hr>
                 <div class="row">     
-                    {% for post in posts %}              
+                    {% for post in posts[1:] %}              
                     <div class="col-lg-6">
                         <div class="card text-center mb-5">
                             <div class="card-header p-0">                                   
