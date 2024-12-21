@@ -1,4 +1,5 @@
 import os, markdown, frontmatter
+from datetime import datetime
 from flask import Blueprint, render_template, url_for
 
 blog = Blueprint('blog', __name__)
@@ -13,17 +14,23 @@ def get_posts():
             filepath = os.path.join(POSTS_FOLDER, filename)
             with open(filepath, 'r') as file:
                 post = frontmatter.load(file)# Procesar metadatos
-                posts.append({
-                    'title': post.get('title', 'Untitled'),
-                    'author': post.get('author', 'Anonymous'),
-                    'date': post.get('date', 'No date'),
-                    'slug': post.get('slug', filename.replace('.md', '')),
-                    'excerpt': post.get('excerpt', ''),
-                    'image': post.get('image', ''),
-                    'content': markdown.markdown(post.content),# Convertir el contenido Markdown a HTML
-                })
-# Ordenar posts por fecha (más recientes primero)
-    posts.sort(key=lambda x: x['date'], reverse=True)
+                posts.append(
+                    {
+                        "title": post.get("title", "Untitled"),
+                        "author": post.get("author", "Anonymous"),
+                        "date": datetime.strptime(
+                            post.get("date", ""), "%Y-%m-%d %H:%M:%S %z"
+                        ).strftime("%d %b, %Y"),
+                        "slug": post.get("slug", filename.replace(".md", "")),
+                        "excerpt": post.get("excerpt", ""),
+                        "image": post.get("image", ""),
+                        "content": markdown.markdown(
+                            post.content
+                        ),  # Convertir el contenido Markdown a HTML
+                    }
+                )
+    # Ordenar posts por fecha (más recientes primero)
+    posts.sort(key=lambda x: x['date'], reverse=False)
     return posts
 
 @blog.route('/')
@@ -50,12 +57,14 @@ def post_detail(slug):
                 if post.get('slug') == slug:
                     content = markdown.markdown(post.content)
                     return render_template(
-                        'post_detail.html', 
-                        title=post.get('title', 'Sin título'),
-                        author=post.get('author', 'Anónimo'),
-                        date=post.get('date', 'Fecha desconocida'),
-                        excerpt=post.get('excerpt', ''),
-                        image=post.get('image', ''),
-                        content=content
+                        "post_detail.html",
+                        title=post.get("title", "Sin título"),
+                        author=post.get("author", "Anónimo"),
+                        date=datetime.strptime(
+                            post.get("date", ""), "%Y-%m-%d %H:%M:%S %z"
+                        ).strftime("%d %b, %Y"),
+                        excerpt=post.get("excerpt", ""),
+                        image=post.get("image", ""),
+                        content=content,
                     )
     return "Post no encontrado", 404

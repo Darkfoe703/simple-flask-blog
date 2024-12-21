@@ -10,10 +10,6 @@ published: true
 highlighter: rouge
 ---
 
-[Versión en español]({{ site.url }}/blog/ES-1-principios-solid)
-
-![SOLID Principles]({{ site.url }}/assets/images/posts/solid.webp)
-
 SOLID principles are a set of guidelines that aim to improve the quality and maintainability of code in software development. These principles help to design more robust, adaptable, and scalable systems. Each letter of SOLID represents a principle: **S**ingle Responsibility Principle, **O**pen/Closed Principle, **L**iskov Substitution Principle, **I**nterface Segregation Principle, and **D**ependency Inversion Principle. While they are useful for any paradigm, they are especially applicable in object-oriented programming (OOP). In this post, we will explore what SOLID is, its importance in real projects, and delve deeper into the first principle with a practical example in Python.
 
 ### **1. Single Responsibility Principle (SRP)**
